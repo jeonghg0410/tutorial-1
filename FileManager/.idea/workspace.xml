@@ -23,10 +23,16 @@
       <file leaf-file-name="Manager.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Manager.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="380">
-              <caret line="45" column="43" lean-forward="true" selection-start-line="45" selection-start-column="43" selection-end-line="45" selection-end-column="43" />
+            <state relative-caret-position="125">
+              <caret line="21" column="26" selection-start-line="21" selection-start-column="26" selection-end-line="21" selection-end-column="26" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#2132#3163#0" expanded="true" />
+                <element signature="e#3162#3163#0" expanded="true" />
+                <element signature="e#3194#4196#0" expanded="true" />
+                <element signature="e#4195#4196#0" expanded="true" />
+                <element signature="e#4228#5130#0" expanded="true" />
+                <element signature="e#5129#5130#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -84,7 +90,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -138,7 +144,7 @@
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="AndroidView" />
     </panes>
   </component>
@@ -505,10 +511,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Manager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="380">
-          <caret line="45" column="43" lean-forward="true" selection-start-line="45" selection-start-column="43" selection-end-line="45" selection-end-column="43" />
+        <state relative-caret-position="125">
+          <caret line="21" column="26" selection-start-line="21" selection-start-column="26" selection-end-line="21" selection-end-column="26" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#2132#3163#0" expanded="true" />
+            <element signature="e#3162#3163#0" expanded="true" />
+            <element signature="e#3194#4196#0" expanded="true" />
+            <element signature="e#4195#4196#0" expanded="true" />
+            <element signature="e#4228#5130#0" expanded="true" />
+            <element signature="e#5129#5130#0" expanded="true" />
           </folding>
         </state>
       </provider>
