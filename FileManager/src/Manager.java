@@ -5,18 +5,7 @@ import java.awt.datatransfer.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Vector;
-import javax.swing.JOptionPane;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JMenuItem;
-import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
+import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
 //5/15 리스트배치 + 테이블 배치 하기
@@ -30,17 +19,11 @@ public class Manager implements ActionListener, ClipboardOwner {
     private JPanel pa;
     private JTextField homeTextField;
     private JTable jt;
-    private JPanel pu;
-    private JLabel filemanager;
     private JComboBox comboBox1;
-    private JPanel pl;
     private JList<String> list1;
-    private String[] listname;
-    private String Back = "..";
     private JScrollPane sp;
     private JScrollPane spl;
-    private File FileSourceDir;
-    private File[] FileSourceFile;
+    private JLabel jl;
     private File name;
     private File getBack;
     private String path = "C:\\";
@@ -49,10 +32,9 @@ public class Manager implements ActionListener, ClipboardOwner {
     private JMenuItem[] PopItem_English = new JMenuItem[6];
     private DefaultTableModel model;
     private int[] copy;
-    String[] Korean_columnNames = {"이름", "크기", "수정한 날짜"};
-    String[] English_columnNames = {"Name", "Size", "Modified"};
-    Vector<String> copyFile;
-    private String[] Filename;
+    private String[] Korean_columnNames = {"이름", "크기", "수정한 날짜"};
+    private String[] English_columnNames = {"Name", "Size", "Modified"};
+    private Vector<String> copyFile;
 
     public Manager() {
         JFrame f = new JFrame("20108");
@@ -80,19 +62,19 @@ public class Manager implements ActionListener, ClipboardOwner {
                 try {
                     String clicked;
                     getBack = new File(path, "..");
-                    clicked = (String) list1.getSelectedValue();
-                    if (clicked == "..") {
+                    clicked = list1.getSelectedValue();
+                    if (clicked.equals("..")) {
                         try {
                             path = getBack.getCanonicalPath();
-                        } catch (Exception ae) {
+                        } catch (Exception ignored) {
 
                         }
                         homeTextField.setText(path);
                         getJList();
                     } else {
-                        path = name.getPath() + File.separator + clicked.toString();
+                        path = name.getPath() + File.separator + clicked;
                         if (path.contains("C:\\\\"))
-                            path = name.getPath() + clicked.toString();
+                            path = name.getPath() + clicked;
                         homeTextField.setText(path);
                         getJList();
                     }
@@ -154,31 +136,23 @@ public class Manager implements ActionListener, ClipboardOwner {
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.setVisible(true);
 
-        comboBox1.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                setTable();
-            }
-        });
+        comboBox1.addActionListener(e -> setTable());
     }
 
-    @Override public void lostOwnership(Clipboard aClipboard, Transferable aContents){
+    @Override
+    public void lostOwnership(Clipboard aClipboard, Transferable aContents) {
         //do nothing
-    }
-
-    public void timeSleep() {
-        for (int i = 0; i < 10000; i++) ;
     }
 
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == PopItem_Korea[3] || e.getSource() == PopItem_English[3]) {
             int[] columns = jt.getSelectedRows();
-            for (int i = 0; i < columns.length; i++) {
-                System.out.println(columns[i]);
-                System.out.println(path + File.separator + jt.getValueAt(columns[i], 0));
+            for (int column : columns) {
+                System.out.println(column);
+                System.out.println(path + File.separator + jt.getValueAt(column, 0));
             }
-            for (int i = 0; i < columns.length; i++) {
-                File delete = new File(path + File.separator + jt.getValueAt(columns[i], 0));
+            for (int column : columns) {
+                File delete = new File(path + File.separator + jt.getValueAt(column, 0));
                 delete.delete();
             }
             for (int i = 0; i < columns.length; i++)
@@ -191,7 +165,7 @@ public class Manager implements ActionListener, ClipboardOwner {
             File open_Directory = new File(path);
             try {
                 Desktop.getDesktop().open(open_Directory);
-            } catch (Exception ae) {
+            } catch (IOException ignored) {
 
             }
         }
@@ -208,8 +182,6 @@ public class Manager implements ActionListener, ClipboardOwner {
         }
 
         if (e.getSource() == PopItem_Korea[2] || e.getSource() == PopItem_English[2]) {
-            File bbd = new File(path);
-            int tmpPast = jt.getRowCount();
             String tmp = path;
             int count = 0;
             for (int i = 0; i < copy.length; i++) {
@@ -217,13 +189,13 @@ public class Manager implements ActionListener, ClipboardOwner {
                 try {
                     Process child = Runtime.getRuntime().exec(command);
                     InputStreamReader in = new InputStreamReader(child.getInputStream(), "MS949");
-                    int c = 0;
-                    String result = "";
-                    int p = 0;
+                    int c;
+                    StringBuilder result;
+                    result = new StringBuilder();
                     while ((c = in.read()) != -1) {
-                        result = result + (char) c;
+                        result.append((char) c);
                     }
-                    if(result.contains("0개 파일이 복사되었습니다.")) {
+                    if (result.toString().contains("0개 파일이 복사되었습니다.")) {
                         if (comboBox1.getSelectedItem() == "한글")
                             JOptionPane.showMessageDialog(null, "액세스 권한이 없습니다.", "에러", JOptionPane.ERROR_MESSAGE);
                         else
@@ -238,7 +210,7 @@ public class Manager implements ActionListener, ClipboardOwner {
                 }
             }
             getJList();
-            if(count == copy.length) {
+            if (count == copy.length) {
                 homeTextField.setText(path);
                 getJList();
             }
@@ -261,7 +233,8 @@ public class Manager implements ActionListener, ClipboardOwner {
         if (directory_list != null) {
             directoryName_List = new String[directory_list.length + 1];
             for (int i = -1; i < directory_list.length; i++) {
-                if (i == -1) directoryName_List[0] = Back;
+                String back = "..";
+                if (i == -1) directoryName_List[0] = back;
                 else {
                     if (directory_list[i].getName().contains("$") ||
                             directory_list[i].getName().contains("Recovery") ||
@@ -311,7 +284,7 @@ public class Manager implements ActionListener, ClipboardOwner {
             getBack = new File(path, "..");
             try {
                 path = getBack.getCanonicalPath();
-            } catch (Exception ae) {
+            } catch (Exception ignored) {
 
             }
             homeTextField.setText(path);
@@ -321,14 +294,16 @@ public class Manager implements ActionListener, ClipboardOwner {
 
     }
 
-    public void setTable() {
+    private void setTable() {
         if (comboBox1.getSelectedItem() == "한글") {
             model = new DefaultTableModel(data, Korean_columnNames);
             jt.setModel(model);
+            jl.setText("파일 매니져");
         }
         if (comboBox1.getSelectedItem() == "English") {
             model = new DefaultTableModel(data, English_columnNames);
             jt.setModel(model);
+            jl.setText("File Manager");
         }
     }
 
