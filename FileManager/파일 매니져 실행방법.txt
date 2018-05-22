@@ -1,0 +1,3 @@
+out->artifacts->FileManager_jar->FileManager.jar클릭으로 실행
+파일 붙여넣기의 경우 파일 이름이 같으면 자동으로 덮어쓰기
+java는 9.0.4버전
