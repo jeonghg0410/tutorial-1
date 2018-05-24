@@ -58,7 +58,6 @@ public class Manager implements ActionListener, ClipboardOwner {
         homeTextField.setText("C:\\");
         PopItem_Korea[2].setEnabled(false);
         PopItem_English[2].setEnabled(false);
-        
         getJList();
 
         list1.addMouseListener(new MouseAdapter() {
@@ -115,7 +114,23 @@ public class Manager implements ActionListener, ClipboardOwner {
         jt.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                if (SwingUtilities.isRightMouseButton(e)) {
+            	//다시해보자
+            	
+            	if(e.getClickCount()==2) {
+            		Desktop desk = Desktop.getDesktop();
+            		int getcount = jt.getSelectedRow();
+            		String open_File = path + File.separator + jt.getValueAt(getcount, 0);
+            		File open = new File(open_File);
+            		try {
+						desk.open(open);
+					} catch (IOException e1) {
+						if (comboBox1.getSelectedItem() == "한글")
+                            JOptionPane.showMessageDialog(null, "열 수 없습니다.", "에러", JOptionPane.ERROR_MESSAGE);
+                        else
+                            JOptionPane.showMessageDialog(null, "you can't open.", "Error", JOptionPane.ERROR_MESSAGE);
+					}
+            	}
+            	if (SwingUtilities.isRightMouseButton(e)) {
                     JPopupMenu PopMenu = new JPopupMenu();
                     if (comboBox1.getSelectedItem() == "한글") {
                         for (int i = 0; i < 4; i++) {
@@ -312,12 +327,22 @@ public class Manager implements ActionListener, ClipboardOwner {
 
     private void setTable() {
         if (comboBox1.getSelectedItem() == "한글") {
-            model = new DefaultTableModel(data, Korean_columnNames);
+            model = new DefaultTableModel(data, Korean_columnNames) {
+            	public boolean isCellEditable(int rowIndex, int mColIndex) {
+            		return false;
+            	}
+            	
+            };
             jt.setModel(model);
             jl.setText("파일 매니져");
         }
         if (comboBox1.getSelectedItem() == "English") {
-            model = new DefaultTableModel(data, English_columnNames);
+            model = new DefaultTableModel(data, English_columnNames) {
+            	public boolean isCellEditable(int rowIndex, int mColIndex) {
+            		return false;
+            	}
+            	
+            };
             jt.setModel(model);
             jl.setText("File Manager");
         }
