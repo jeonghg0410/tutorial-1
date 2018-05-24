@@ -244,6 +244,7 @@ public class Manager implements ActionListener, ClipboardOwner {
 
         //파일 받아오기
         //NULLPOINT dialog 생성말자 걍
+        int count = 1;
         directoryName_List = new String[0];
         if (directory_list != null) {
             directoryName_List = new String[directory_list.length + 1];
@@ -259,7 +260,8 @@ public class Manager implements ActionListener, ClipboardOwner {
                             directory_list[i].getName().contains("Documents and Settings") ||
                             !directory_list[i].canRead()) continue;
 
-                    directoryName_List[i + 1] = directory_list[i].getName();
+                    directoryName_List[count] = directory_list[i].getName();
+                    count++;
                 }
             }
         }
