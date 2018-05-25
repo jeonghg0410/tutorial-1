@@ -114,7 +114,6 @@ public class Manager implements ActionListener, ClipboardOwner {
         jt.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-            	//다시해보자
             	
             	if(e.getClickCount()==2) {
             		Desktop desk = Desktop.getDesktop();
@@ -125,10 +124,10 @@ public class Manager implements ActionListener, ClipboardOwner {
 						desk.open(open);
 					} catch (IOException e1) {
 						if (comboBox1.getSelectedItem() == "한글")
-                            JOptionPane.showMessageDialog(null, "열 수 없습니다.", "에러", JOptionPane.ERROR_MESSAGE);
+							JOptionPane.showOptionDialog(null, "열 수 없습니다.","에러", JOptionPane.DEFAULT_OPTION,JOptionPane.ERROR_MESSAGE, null, new Object[]{}, null);
                         else
-                            JOptionPane.showMessageDialog(null, "you can't open.", "Error", JOptionPane.ERROR_MESSAGE);
-					}
+                        	JOptionPane.showOptionDialog(null, "You can't open","Error", JOptionPane.DEFAULT_OPTION,JOptionPane.ERROR_MESSAGE, null, new Object[]{}, null);
+                        }
             	}
             	if (SwingUtilities.isRightMouseButton(e)) {
                     JPopupMenu PopMenu = new JPopupMenu();
@@ -178,10 +177,7 @@ public class Manager implements ActionListener, ClipboardOwner {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == PopItem_Korea[3] || e.getSource() == PopItem_English[3]) {
             int[] columns = jt.getSelectedRows();
-            for (int column : columns) {
-                System.out.println(column);
-                System.out.println(path + File.separator + jt.getValueAt(column, 0));
-            }
+            
             for (int column : columns) {
                 File delete = new File(path + File.separator + jt.getValueAt(column, 0));
                 delete.delete();
@@ -227,9 +223,10 @@ public class Manager implements ActionListener, ClipboardOwner {
                     }
                     if (result.toString().contains("0개 파일이 복사되었습니다.")) {
                         if (comboBox1.getSelectedItem() == "한글")
-                            JOptionPane.showMessageDialog(null, "액세스 권한이 없습니다.", "에러", JOptionPane.ERROR_MESSAGE);
+                        	JOptionPane.showOptionDialog(null, "파일이 없거나 접근 권한이 없습니다.","에러", JOptionPane.DEFAULT_OPTION,JOptionPane.ERROR_MESSAGE, null, new Object[]{}, null);
                         else
-                            JOptionPane.showMessageDialog(null, "You don't have access", "Error", JOptionPane.ERROR_MESSAGE);
+                        	JOptionPane.showOptionDialog(null, "You don't have file or access","Error", JOptionPane.DEFAULT_OPTION,JOptionPane.ERROR_MESSAGE, null, new Object[]{}, null);
+                      
                         in.close();
                         break;
                     }
@@ -311,8 +308,8 @@ public class Manager implements ActionListener, ClipboardOwner {
             setTable();
         } else {//5/20 여기부터 다시하자
             if (comboBox1.getSelectedItem() == "한글")
-                JOptionPane.showMessageDialog(null, "액세스 권한이 없습니다.", "에러", JOptionPane.ERROR_MESSAGE);
-            else JOptionPane.showMessageDialog(null, "You don't have access", "Error", JOptionPane.ERROR_MESSAGE);
+            	JOptionPane.showOptionDialog(null, "접근 권한이 없습니다.","에러", JOptionPane.DEFAULT_OPTION,JOptionPane.ERROR_MESSAGE, null, new Object[]{}, null);
+            else JOptionPane.showOptionDialog(null, "You don't have access.","Error", JOptionPane.DEFAULT_OPTION,JOptionPane.ERROR_MESSAGE, null, new Object[]{}, null);
             getBack = new File(path, "..");
             try {
                 path = getBack.getCanonicalPath();
